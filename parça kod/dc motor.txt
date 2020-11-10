@@ -1,0 +1,34 @@
+
+#define MotorPin 5 
+int MotorDurum = LOW;
+String readString = "";
+
+void setup() {
+ 
+  pinMode(MotorPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+while (Serial.available()) { // gelen komutu alıyoruz
+ char c = (char)Serial.read();
+ readString += c;
+ }
+
+if (readString.length() > 0) { // komut var ise
+ 
+ if (readString == "fan aç") { // gelen komut kontrolüne göre işlem yaptırıyoruz
+ MotorDurum = HIGH;
+ }
+ if (readString == "fan kapat") { // gelen komut kontrolüne göre işlem yaptırıyoruz
+ MotorDurum = LOW;
+ }
+
+
+ readString = ""; //gelen mesajı sıfırlıyoruz
+  }
+
+  delay(100);
+
+}

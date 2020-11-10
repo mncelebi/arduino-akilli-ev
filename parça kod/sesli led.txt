@@ -1,0 +1,39 @@
+/*
+ 
+Arduino Sesli Kontrol
+www.projehocam.com
+Yazar: Cem PEHLİVAN
+ 
+*/
+ 
+String readString = "";
+#define led 8 // 13. kapıya bağlı olan ledi kontrol edeceğiz. ledi tanımladık
+ 
+void setup() {
+ pinMode(led, OUTPUT);
+ digitalWrite(led, LOW);
+ Serial.begin(9600); //Bluetooth modülümüz ile 9600 bandında haberleşeceğiz
+}
+ 
+void loop() {
+ while (Serial.available()) { // gelen komutu alıyoruz
+ char c = (char)Serial.read();
+ readString += c;
+ }
+ 
+ if (readString.length() > 0) { // komut var ise
+ 
+ if (readString == "yak") { // gelen komut kontrolüne göre işlem yaptırıyoruz
+ digitalWrite(led, HIGH);
+ }
+ 
+ if (readString == "kapat") {
+ digitalWrite(led, LOW);
+ }
+ 
+ 
+ readString = ""; //gelen mesajı sıfırlıyoruz
+ }
+ 
+ delay(100);
+}
